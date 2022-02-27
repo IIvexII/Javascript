@@ -1,0 +1,17 @@
+#calculator
+{
+    padding-left: 200px;
+}
+#inputField
+{
+    width: 120px;
+    font-size: 40px;
+    padding-left: 70px;
+}
+.buttons input
+{
+    margin-top: 20px;
+    margin-right: 8px;
+    width: 40px;
+    height: 40px;
+}
