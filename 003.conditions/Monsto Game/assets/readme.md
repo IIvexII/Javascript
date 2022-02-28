@@ -1,1 +1,0 @@
-![plot](../../../screenshot/monsto_game.png)
