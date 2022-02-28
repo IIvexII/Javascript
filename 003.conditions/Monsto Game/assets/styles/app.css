@@ -84,3 +84,20 @@ button:active {
   text-align: center;
   margin: 0 0.5rem;
 }
+#game-status
+{
+  font-size: 1.6rem;
+}
+#game-status #lose-status
+{
+  text-align: left;
+  color: red;
+  margin-right: 3rem;
+} 
+
+#game-status #win-status
+{
+  text-align: right;
+  color: green;
+  margin-left: 3rem;
+} 
