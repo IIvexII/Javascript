@@ -10,12 +10,12 @@ const MONSTER_ATK_DMG = 17;
 const HEAL_HEALTH = 30;
 
 // Log event constents
-const LOG_EVENT_MONSTER_HIT = "Monster Attacked";
-const LOG_EVENT_PLAYER_HIT = "Player Attacked";
-const LOG_EVENT_PLAYER_HEALED = "Player Healed";
-const LOG_EVENT_PLAYER_WON = "Player Won";
-const LOG_EVENT_PLAYER_LOSE = "Player Lose";
-const LOG_EVENT_GAME_DRAW = "Game Draw";
+const LOG_EVENT_MONSTER_HIT   = "Monster Attacked";
+const LOG_EVENT_PLAYER_HIT    = "Player Attacked ";
+const LOG_EVENT_PLAYER_HEALED = "Player Healed   ";
+const LOG_EVENT_PLAYER_WON    = "Player Won      ";
+const LOG_EVENT_PLAYER_LOSE   = "Player Lose     ";
+const LOG_EVENT_GAME_DRAW     = "Game Draw       ";
 
 let maxLife;
 
@@ -154,5 +154,14 @@ function eventLog(event, playerHealth, monsterHealth, damage)
 
 function logHandler() 
 {
-  console.log(logEntries);
+  for (let i = 0; i < logEntries.length; i++)
+  {
+    let row = "";
+
+    for(const key in logEntries[i])
+    {
+      row += logEntries[i][key] + "\t\t"; 
+    }
+    console.log(row);
+  }
 }
