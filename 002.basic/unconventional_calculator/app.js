@@ -1,4 +1,12 @@
 ////////////////////////////////////////////////////////////////
+//                     Global Constents
+////////////////////////////////////////////////////////////////
+const ADD = 'ADD';
+const SUB = 'SUB';
+const MULTIPLY = 'MULTIPLY';
+const DIVIDE = 'DIVIDE';
+
+////////////////////////////////////////////////////////////////
 //            Define some constents to the html tags
 ////////////////////////////////////////////////////////////////
 const inputField = document.getElementById("inputField");
@@ -15,10 +23,10 @@ const expressionDisplay = document.getElementById("expression");
 //                    Main Functionality
 ////////////////////////////////////////////////////////////////
 
-plusBtn.addEventListener("click", add);
-minusBtn.addEventListener("click", sub);
-multiplyBtn.addEventListener("click", mul);
-divideBtn.addEventListener("click", div);
+plusBtn.addEventListener("click", calculator.bind(this, ADD));
+minusBtn.addEventListener("click", calculator.bind(this, SUB));
+multiplyBtn.addEventListener("click", calculator.bind(this, MULTIPLY));
+divideBtn.addEventListener("click", calculator.bind(this, DIVIDE));
 
 ////////////////////////////////////////////////////////////////
 //                        functions
@@ -26,53 +34,36 @@ divideBtn.addEventListener("click", div);
 let prevNumber = 0;
 let logEntries = [];
 
-function add()
+function calculator(operation)
 {
     let inputValue = getCurrentValue();
-    let exp = expressionBuilder('+', prevNumber, inputValue); 
     let initialValue = prevNumber;  // for saving the current value of prevNumber variable
+    let operator;
 
-    prevNumber += inputValue;
-
+    if (operation === ADD)
+    {        
+        prevNumber += inputValue;
+        operator = '+';
+    }
+    else if (operation === SUB)
+    {
+        prevNumber -= inputValue;   
+        operator = '-';
+    }
+    else if (operation === MULTIPLY)
+    {
+        prevNumber *= inputValue;
+        operator = '*';
+    }
+    else if (operation === DIVIDE)
+    {
+        prevNumber /= inputValue;
+        operator = '/';
+    }
     // Logging the calculations
-    logEntry('+', initialValue, inputValue, prevNumber);
+    let exp = expressionBuilder(operator, initialValue, prevNumber); 
+    logEntry(operator, initialValue, inputValue, prevNumber);
     output(prevNumber, exp);
-}
-function sub()
-{
-    let inputValue = getCurrentValue();
-    let exp = expressionBuilder('-', prevNumber, inputValue); 
-    let initialValue = prevNumber;  // for saving the current value of prevNumber variable
-
-    prevNumber -= inputValue;
-
-    // Logging the calculations
-    logEntry('-', initialValue, inputValue, prevNumber);
-    output(prevNumber, exp);
-}
-function mul()
-{
-    let inputValue = getCurrentValue();
-    let exp = expressionBuilder('*', prevNumber, inputValue); 
-    let initialValue = prevNumber;  // for saving the current value of prevNumber variable
-
-    prevNumber *= inputValue;
-
-    // Logging the calculations
-    logEntry('*', initialValue, inputValue, prevNumber);
-    output(prevNumber, exp);
-}
-function div()
-{
-    let inputValue = getCurrentValue();
-    let exp = expressionBuilder('/', prevNumber, inputValue); 
-    let initialValue = prevNumber;  // for saving the current value of prevNumber variable
-
-    prevNumber /= inputValue;
-
-    // Logging the calculations
-    logEntry('/', initialValue, inputValue, prevNumber);
-    output(prevNumber.toFixed(2), exp);
 }
 ///////////////////////////////////////////////////////////////
 //                     Helper functions
@@ -86,6 +77,9 @@ function logEntry(operation, value1, value2, result)
         result: result
     };
     logEntries.push(log);
+
+    // display as well
+    console.log(logEntries);
 }
 function expressionBuilder(operator, value1, value2)
 {
