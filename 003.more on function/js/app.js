@@ -5,6 +5,11 @@ const PAPER = 'PAPER';
 const SCISSOR = 'SCISSOR';
 const DEFAULT_SELECTION = 'ROCK';
 
+// startBtn color change
+bgColorRGB(startBtn);
+bgColorRGB(document.body);
+
+
 startBtn.addEventListener('click', () => {
   console.log('Starting the game....');
   const computerChoice = getComputerChoice();
@@ -47,4 +52,19 @@ function winner(cChoice, pChoice)
     return 'Player Win!';
   else
     return 'Computer Win!'
+}
+
+function bgColorRGB(elem)
+{
+  const colors = ['#2a9d8f', '#e76f51'];
+  let i = 0;
+  setInterval(()=>{
+    if (colors.length === i)
+      i = 0;
+
+    elem.style.backgroundColor = colors[i];
+    elem.style.transition = '2s ease';
+    elem.style.color = 'white';
+    i++;
+  }, 1000);
 }
