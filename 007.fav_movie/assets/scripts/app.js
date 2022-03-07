@@ -7,6 +7,12 @@ const addMovieModal = document.getElementById('add-modal');
 const userInputs = addMovieModal.querySelectorAll('input');
 const addMovieBtn = document.querySelector('.modal .modal__actions').lastElementChild;
 const cancelAddMovie = document.querySelector('.modal .modal__actions').firstElementChild;
+
+// Delete Movie modal
+const deleteMovieModal = document.getElementById('delete-modal');
+const cancelDeleteMovie = deleteMovieModal.querySelector('.modal .modal__actions').firstElementChild;
+let deleteMovieBtn = deleteMovieModal.querySelector('.modal .modal__actions').lastElementChild;
+
 const movieListElement = document.getElementById('movie-list');
 const entryText = document.getElementById('entry-text');
 const moviesList = [];
@@ -16,12 +22,21 @@ const moviesList = [];
 //////////////////////////////
 startAddModalBtn.addEventListener('click', toggleAddModal);
 addMovieBtn.addEventListener('click', addNewMovieHandler);
-cancelAddMovie.addEventListener('click', toggleAddModal);
-backDrop.addEventListener('click', toggleAddModal);
+cancelAddMovie.addEventListener('click', closeModal);
+
+backDrop.addEventListener('click', closeModal);
 
 //////////////////////////////
 //        functions
 //////////////////////////////
+function clearInput()
+{
+  for (usrInp of userInputs)
+  {
+    usrInp.value = '';
+  }
+}
+
 function toggleAddModal() {
   backDrop.classList.toggle('visible');
   addMovieModal.classList.toggle('visible');
@@ -46,6 +61,7 @@ function addNewMovieHandler() {
     alert('Please Enter valid input.');
   }
   toggleAddModal();
+  clearInput();
   entryText.style.display = 'none';
 }
 
@@ -60,6 +76,7 @@ function validateInput(title, img, rating) {
   }
   return 1;
 }
+
 function renderUI(title, img, rating) {
   const newListElem = document.createElement('li');
   newListElem.className = 'movie-element';
@@ -74,4 +91,47 @@ function renderUI(title, img, rating) {
   `;
 
   movieListElement.append(newListElem);
+  newListElem.addEventListener('click', deleteMovieHandler.bind(null, title));
+}
+
+function deleteMovieHandler (title)
+{
+  toggleDeleteModal();
+  // hacky solution for more then one listners running in background so to remove them.
+  deleteMovieBtn.replaceWith(deleteMovieBtn.cloneNode(true));
+
+  deleteMovieBtn = deleteMovieModal.querySelector('.modal .modal__actions').lastElementChild;
+
+  cancelDeleteMovie.addEventListener('click', closeModal);
+  deleteMovieBtn.addEventListener('click', deleteMovie.bind(null, title));
+}
+
+function deleteMovie(title)
+{
+  let movieIndex = 0;
+  for (movie of moviesList)
+  {
+    if (movie.title === title)
+    {
+      break;
+    }
+    movieIndex++;
+  }
+  moviesList.splice(movieIndex, 1);
+  movieListElement.children[movieIndex].remove();
+
+  if (moviesList.length === 0) 
+    entryText.style.display = 'block';
+  closeModal();
+}
+
+function toggleDeleteModal ()
+{
+  deleteMovieModal.classList.toggle('visible'); 
+  backDrop.classList.toggle('visible');
+}
+function closeModal () {
+  backDrop.classList.remove('visible');
+  addMovieModal.classList.remove('visible');
+  deleteMovieModal.classList.remove('visible');
 }
