@@ -1,0 +1,18 @@
+ul {
+  margin-left: 20%;
+  font-size: 1.2rem;
+  padding-top: 2rem;
+}
+ul li {
+  padding: 1rem 5rem;
+  border: 1px solid black;
+  list-style: none;
+  width: 400px;
+  text-align: center;
+}
+.border-black {
+  border-color: black;
+}
+.border-blue {
+  border-color: blue;
+}
