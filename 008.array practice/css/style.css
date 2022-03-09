@@ -1,0 +1,12 @@
+ul.array {
+  margin-left: 20%;
+  font-size: 1.2rem;
+  padding-top: 2rem;
+}
+ul.array li.element {
+  padding: 1rem 5rem;
+  border: 1px solid black;
+  list-style: none;
+  width: 400px;
+  text-align: center;
+}
