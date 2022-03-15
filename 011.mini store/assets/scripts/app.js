@@ -62,15 +62,25 @@ class ProductList {
 }
 class Cart {
   constructor () {
-    this.items = [];
+    this.items = {};
     this.totalPrice = 0.0;
   }
-  addItem (product) {
-    this.items.push(product);
+  addProductInList (product) {
+    // Add product info in items object
+    if (product.name in this.items) {
+      this.items[product.name].count += 1;
+    }
+    else {
+      this.items[product.name] = {
+        count: 1,
+        price: product.price
+      };
+    }
+    // Update total price property and on screen as well
     this.totalPrice += product.price;
     this.totalEl.textContent = this.totalPrice;
   }
-  createCart () {
+  createCartDisplay () {
     const cart = document.createElement('section');
     cart.className = 'cart';
     cart.innerHTML = `
@@ -82,15 +92,10 @@ class Cart {
   }
 }
 class Shop {
-  addToCart (product) {
-    this.cart.addItem(product);
-  }
-
   render() {
     const app = document.getElementById('app');
-    const body = document.querySelector('body');
     this.cart = new Cart();
-    app.append(this.cart.createCart());
+    app.append(this.cart.createCartDisplay());
     const productList = new ProductList();
     app.append(productList.createProductList());
   }
@@ -103,9 +108,8 @@ class App {
     shop.render();
     this.cart = shop.cart;
   }
-
   static addProductToCart (product) {
-    this.cart.addItem(product);
+    this.cart.addProductInList(product);
   }
 }
 App.start();
