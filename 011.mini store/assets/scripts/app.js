@@ -15,15 +15,22 @@ class ProductItem {
     App.addProductToCart(this.product);
   }
   createProductItem () {
+    const name = this.product.name;
+    const imageUrl = this.product.imgUrl;
+    const price = this.product.price;
+    const desc = this.product.description;
+    const limitedDesc = (desc.length > 50)
+      ? desc.slice(0,50) + '...'
+      : desc;  
     const newLi = document.createElement('li');
     newLi.className = 'product-item';
     newLi.innerHTML = `
       <div class='product-item__content'>
-        <img src='${this.product.imgUrl}'>
-        <h2>${this.product.name}</h2>      
-        <h3>\$${this.product.price}</h3>      
-        <p>${this.product.description}</p>      
-        <button>Add to Cart</button>
+        <h2 class='title'>${name}</h2>      
+        <img src='${imageUrl}'>
+        <h2><span class='price'>Rs.${price}</span></h2>      
+        <p><abbr title='${desc}'>${limitedDesc}</abbr></p>      
+        <button class='add-to-cart-btn'>Add to Cart</button>
       </div>
     `;
     const addToCartBtn = newLi.querySelector('button');
@@ -35,17 +42,23 @@ class ProductList {
   constructor () {
     this.products = [
       new Product(
-        'Addidas Bag',
-        'https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/9da7753e6c354e24a5f8addd0158b37d_9366/Adicolor_Classic_Festival_Bag_Blue_HD7163_01_standard.jpg',
-        800,
-        'A nice bag.'
+        'Intel® Celeron® N3350',
+        'https://static-01.daraz.pk/p/a55f5ab8451acde4a820a567400e0cd4.jpg',
+        49000,
+        'i-Life Zed PC All in One - 17.3 TouchScreen Portable AIO - Intel® Celeron® N3350 - 4GB - 500 GB HDD - Windows® 10 Home - Silver'
       ),
       new Product(
-        'Samsang TV',
-        'https://images.samsung.com/is/image/samsung/p6pim/es/qe75q80batxxc/gallery/es-qled-q80b-qe75q80batxxc-531520037?$684_547_PNG$',
-        90500,
-        'Ultra HD TV.'
-      )
+        'HP 6300 Core i5-3470 3.10GHz',
+        'https://static-01.daraz.pk/p/1bb34012d7894d8a1d1225aa3ef93266.jpg',
+        55000,
+        'HP 6300 All-in-One PC Desktop Computer, 22 Inch Full-HD WLED Display, Core i5-3470 3.10GHz, 4GB RAM, 500GB HDD, DVD, WiFi, Bluetooth'
+      ),
+      new Product(
+        'Core i5 4th Generation',
+        'https://static-01.daraz.pk/p/11c09f5cfd042b759562a77bc30618de.jpg',
+        23000,
+        'Hp Core i5 4th Generation Processor 3.2 Ghz  Ram 8 GB DDR 3 Hard Drive 250 GB Sata Super Combo DVD Room Free Keyboard, Mouse, Wifi Windows 10 Installed'
+      ),
     ];
   }
   createProductList() {
@@ -84,7 +97,7 @@ class Cart {
     const cart = document.createElement('section');
     cart.className = 'cart';
     cart.innerHTML = `
-      <h2>\$<span id='price'>0<span></h2>
+      <h2>Rs.<span id='price'>0<span></h2>
       <button>Proceed to Pay!</button>
     `;
     this.totalEl = cart.querySelector('#price');
