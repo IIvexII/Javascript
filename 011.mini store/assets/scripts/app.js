@@ -78,6 +78,27 @@ class Cart {
     this.items = {};
     this.totalPrice = 0.0;
   }
+  order()
+  {
+    if (Object.keys(this.items).length > 0)
+    {
+      let total = 0;
+      console.log('NAME\t\t\t\t\tQTY\t\tPRICE\t\tTOTAL');
+
+      for (const key in this.items)
+      {
+        const product = this.items[key];
+        console.log(`${key.slice(0,20)}...\t${product.count}\t\t${product.price}\t\t${product.price*product.count}`);
+        total += product.price*product.count;
+      }
+      console.log('---------------------------------------------------------------');
+      console.log('Sub Total: ', total);
+      console.log('---------------------------------------------------------------');
+    }
+    else {
+      console.log('Please add to cart something!');
+    }
+  }
   addProductInList (product) {
     // Add product info in items object
     if (product.name in this.items) {
@@ -98,9 +119,11 @@ class Cart {
     cart.className = 'cart';
     cart.innerHTML = `
       <h2>Rs.<span id='price'>0<span></h2>
-      <button>Proceed to Pay!</button>
+      <button>Order Now!</button>
     `;
     this.totalEl = cart.querySelector('#price');
+    const orderNowBtn = cart.querySelector('button');
+    orderNowBtn.addEventListener('click', this.order.bind(this));
     return cart;
   }
 }
