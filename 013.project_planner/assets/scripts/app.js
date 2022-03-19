@@ -11,7 +11,6 @@ class App {
     }
   }
   buttonEvent(btn) {
-    console.log(btn.textContent);
     if (btn.textContent === 'Finish') {
       const finishedProjects = document.querySelector('#finished-projects ul');  
       btn.textContent = 'Activate';
@@ -23,7 +22,7 @@ class App {
       finishedProjects.appendChild(this);
     }
     else if (btn.textContent === 'More Info') {
-      console.log('Info..');
+      console.log(this.dataset.extraInfo);
     }
   }
 }
