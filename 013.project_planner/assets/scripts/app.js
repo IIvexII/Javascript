@@ -22,7 +22,10 @@ class App {
       finishedProjects.appendChild(this);
     }
     else if (btn.textContent === 'More Info') {
-      console.log(this.dataset.extraInfo);
+      const newELm = document.createElement('div');
+      newELm.className = 'card';
+      newELm.textContent = this.dataset.extraInfo;
+      document.body.insertAdjacentElement('afterBegin', newELm);
     }
   }
 }
